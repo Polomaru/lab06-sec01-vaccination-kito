@@ -8,6 +8,7 @@ import data.entities.Citizen;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -34,6 +35,11 @@ public class CitizenController {
         System.out.println("-------TESt-------");
         System.out.println(userService.findOneById(12345678L) );
         return userService.getAll();
+    }
+
+    @GetMapping("/vaccine/{id}")
+    public Date getVaccine(@PathVariable Long id){
+        return userService.getVaccine(id);
     }
 
 

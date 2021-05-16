@@ -1,8 +1,14 @@
 package data.entities;
 
 
+
 import javax.persistence.*;
 import java.util.Date;
+
+import static config.AppConfig.DB_CHAR_LENGTH;
+import static config.AppConfig.DB_DNI_LENGTH;
+import static config.AppConfig.DB_PHONE_LENGTH;
+
 
 @Entity
 @Table(name = "persona")
@@ -10,20 +16,19 @@ public class Citizen {
 
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "dni",unique = true,updatable = false, length = 8)
+    @Column(name = "dni",unique = true, nullable = false)
     private Long dni;
 
-    @Column(name = "nombres")
+    @Column(name = "nombres", length = DB_CHAR_LENGTH)
     private String names;
 
-    @Column(name = "apellidos")
+    @Column(name = "apellidos",length = DB_CHAR_LENGTH)
     private String surnames;
 
     @Column(name = "fecha_nacimiento")
     private Date date;
 
-    @Column(name = "telefono", length = 20, unique = true)
+    @Column(name = "telefono", length = DB_PHONE_LENGTH, unique = true)
     private String phoneNum;
 
     @Column(name = "email", unique = true)

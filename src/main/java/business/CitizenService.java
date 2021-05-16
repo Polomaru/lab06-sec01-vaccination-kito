@@ -6,6 +6,7 @@ import data.repositories.CitizenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -17,18 +18,18 @@ public class CitizenService {
     @Autowired
     private CitizenRepository citizenRepository;
 
-    public Citizen save(CitizenDTO citizenDTO){
-        var citizen = new Citizen();
-        citizen.setDni(citizen.getDni());
-        citizen.setNames(citizenDTO.getName());
-        citizen.setSurnames(citizenDTO.getSurname());
-        citizen.setDate(citizenDTO.getDate());
-        citizen.setEmail(citizenDTO.getEmail());
-        citizen.setPhoneNum(citizenDTO.getPhoneNum());
+    public Citizen save(Citizen citizenDTO){
+//        var citizen = new Citizen();
+//        citizen.setDni(12345677L);
+//        citizen.setNames(citizenDTO.getName());
+//        citizen.setSurnames(citizenDTO.getSurname());
+//        citizen.setDate(citizenDTO.getDate());
+//        citizen.setEmail(citizenDTO.getEmail());
+//        citizen.setPhoneNum(citizenDTO.getPhoneNum());
 
-
-//        return CitizenRepository.save(citizen);
-        return citizen;
+        System.out.println(citizenDTO);
+        citizenRepository.save(citizenDTO);
+        return citizenDTO;
     }
 
     public Citizen findOneById(Long id){

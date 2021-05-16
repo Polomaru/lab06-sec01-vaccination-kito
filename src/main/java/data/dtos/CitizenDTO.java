@@ -3,7 +3,7 @@ package data.dtos;
 import java.util.Date;
 
 public class CitizenDTO {
-    String dni;
+    Long dni;
     String name;
     String surname;
     Date date;
@@ -15,11 +15,11 @@ public class CitizenDTO {
         //DEFAULT CONSTRUCTOR
     }
 
-    public String getDni() {
+    public Long getDni() {
         return dni;
     }
 
-    public void setDni(String dni) {
+    public void setDni(Long dni) {
         this.dni = dni;
     }
 

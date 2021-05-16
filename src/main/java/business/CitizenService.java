@@ -35,7 +35,7 @@ public class CitizenService {
         var Citizen = new Citizen();
         Optional<Citizen> userOptional = citizenRepository.findById(id);
         if(userOptional.isPresent()) return userOptional.get();
-        else return  Citizen;
+        return Citizen;
     }
 
     public List<Citizen> getAll(){

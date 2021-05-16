@@ -1,11 +1,16 @@
 package cs.software.demo;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Random;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.logging.Logger;
 
 import business.CitizenService;
+import controller.CitizenController;
+import data.dtos.CitizenDTO;
 import data.entities.Citizen;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -22,40 +27,44 @@ public class DemoApplication {
     public static void main(String[] args) throws ParseException {
 
         SpringApplication.run(DemoApplication.class, args);
-        var Scanner = new Scanner(System.in);
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Logger logger = Logger.getLogger(DemoApplication.class.getName());
 
-        System.out.print("Ingrese su Dni: ");
+        final var Scanner = new Scanner(System.in);
+        var sdf = new SimpleDateFormat("dd/MM/yyyy");
+
+        logger.info(() -> "------------------------------------------------");
+        logger.info("Ingrese su Dni: ");
         var id = Scanner.nextLong();
-        System.out.print(id);
+        var request = new CitizenController();
 
-        //finding dni
-        var A = new CitizenService();
-        var request = A.findOneById(id);
+        do {
+            var newCitizen = new CitizenDTO();
+            logger.info("Usuario no registrado!");
+            newCitizen.setDni(id);
+            logger.info("Ingrese los siguientes datos:");
+            Scanner.nextLine();
+            logger.info("Nombre: ");
+            newCitizen.setName(Scanner.nextLine());
+            logger.info("Apellido: ");
+            newCitizen.setSurname(Scanner.nextLine());
+            logger.info("Telefono : ");
+            newCitizen.setPhoneNum(Scanner.nextLine());
+            logger.info("Email : ");
+            newCitizen.setEmail(Scanner.nextLine());
 
-        if(request.getDni() == null)
-        {
-            String name;
-            String surname;
-            Date date;
-            String phone;
-            String email;
-            System.out.println("Usuario no registrado!");
-            System.out.println("Ingrese los siguientes datos:");
+            var randomDay = new Random();
+            var date = Calendar.getInstance();
+            date.set(1970, Calendar.JANUARY, (randomDay.nextInt(31 - 1) + 2));
 
-            System.out.print("Nombre: ");
-            name = Scanner.nextLine();
-            System.out.print("Apellido: ");
-            surname = Scanner.nextLine();
-            System.out.print("Fono : ");
-            phone = Scanner.nextLine();
-            System.out.print("Email : ");
-            email = Scanner.nextLine();
+            newCitizen.setDate(date.getTime());
+            request.postUser(newCitizen);
+            logger.info("Se ha registrado al siguiente usuario: ");
+            newCitizen.toString();
+            logger.info("\n\tIngrese nuevamente su dni: ");
+            id = Scanner.nextLong();
+        } while(request.getUserById(id).equals(new Citizen()));
 
-            request.replace(id,name, surname, A.getVaccine(id),phone, email);
-
-        }
-
+        logger.info("La fecha de vacunacion del ciudadano es: " + request.getVaccine(id).toString());
     }
 
 }

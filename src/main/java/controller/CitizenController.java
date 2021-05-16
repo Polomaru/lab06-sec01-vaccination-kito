@@ -29,13 +29,7 @@ public class CitizenController {
     }
 
     @GetMapping("/all")
-    public List<Citizen> getAll(){
-        System.out.println("-------TESt-------");
-        System.out.println(userService.getAll());
-        System.out.println("-------TESt-------");
-        System.out.println(userService.findOneById(12345678L) );
-        return userService.getAll();
-    }
+    public List<Citizen> getAll(){ return userService.getAll(); }
 
     @GetMapping("/vaccine/{id}")
     public Date getVaccine(@PathVariable Long id){

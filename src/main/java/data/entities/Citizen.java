@@ -40,7 +40,14 @@ public class Citizen {
         this.phoneNum = phoneNum;
         this.email = email;
     }
-
+    public void replace(Long dni, String names, String surnames, Date date, String phoneNum, String email) {
+        this.dni = dni;
+        this.names = names;
+        this.surnames = surnames;
+        this.date = date;
+        this.phoneNum = phoneNum;
+        this.email = email;
+    }
     public Long getDni() {
         return dni;
     }

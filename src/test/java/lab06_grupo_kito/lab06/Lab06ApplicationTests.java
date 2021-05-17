@@ -1,7 +1,10 @@
 package lab06_grupo_kito.lab06;
+import business.CitizenService;
 import cs.software.demo.DemoApplication;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import data.dtos.CitizenDTO;
+import data.entities.Citizen;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
@@ -15,6 +18,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.logging.Logger;
 
 
@@ -64,4 +69,27 @@ class Lab06ApplicationTests {
         String url = "http://localhost:" + PORT + "/citizen/44731344";
         assertThat(this.restTemplate.getForEntity(url, String.class).getStatusCodeValue()).isEqualTo(200);
     }
+
+    /**Data Tests
+     * CitizenDTO Tests*/
+    @Test
+    void CitizenDTOTests() throws Exception{
+        var citizenDTO = new CitizenDTO();
+        Assertions.assertNotNull(citizenDTO);
+        citizenDTO.setDni(12345679L);
+        Assertions.assertEquals(12345679L,citizenDTO.getDni());
+        citizenDTO.setNames("Pedro");
+        Assertions.assertEquals("Pedro",citizenDTO.getNames());
+        citizenDTO.setSurnames("Quispe");
+        Assertions.assertEquals("Quispe",citizenDTO.getSurnames());
+        citizenDTO.setDate(new Date(2021, Calendar.JANUARY,1));
+        Assertions.assertEquals(new Date(2021, Calendar.JANUARY,1),citizenDTO.getDate());
+        citizenDTO.setPhoneNum("999999999");
+        Assertions.assertEquals("999999999",citizenDTO.getPhoneNum());
+        citizenDTO.setEmail("a@gmail.com");
+        Assertions.assertEquals("a@gmail.com",citizenDTO.getEmail());
+        Assertions.assertNotEquals(" ",citizenDTO.toString());
+
+    }
+
 }

@@ -3,7 +3,6 @@ import cs.software.demo.DemoApplication;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import controller.CitizenController;
-import cs.software.demo.DemoApplication;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

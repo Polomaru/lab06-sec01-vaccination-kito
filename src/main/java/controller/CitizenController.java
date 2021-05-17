@@ -10,12 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.nio.charset.Charset;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -27,9 +22,9 @@ import java.util.logging.Logger;
 @RequestMapping("/citizen")
 public class CitizenController {
 
-    static final Logger logger = Logger.getLogger(DemoApplication.class.getName());
+    static final Logger logger = Logger.getLogger(CitizenController.class.getName());
     static final Scanner scanner = new Scanner(System.in);
-    static final String url = "http://ws-consultas.herokuapp.com/api/dni/";
+    static final String URL = "http://ws-consultas.herokuapp.com/api/dni/";
 
     @Autowired
     private CitizenService userService;
@@ -44,7 +39,7 @@ public class CitizenController {
     public Citizen getUserById(@PathVariable Long id) throws IOException, JSONException {
         if ((int)(Math.log10(id)+1) != 8 ) throw new IllegalArgumentException();
         logger.info(() -> "-------------------[getUserById()]------------------");
-        var request = APIHandling.readJsonFromUrl(url + id.toString());
+        var request = APIHandling.readJsonFromUrl(URL + id.toString());
         if(request.isNull("dni")) {
             var citizen = userService.findOneById(id);
             if (citizen.getDni() == null) {
@@ -55,7 +50,12 @@ public class CitizenController {
                 logger.info(() -> "Apellido(s): ");
                 citizen.setSurnames(scanner.nextLine());
                 logger.info(() -> "Año de nacimiento: ");
-                citizen.setDate(new Date(scanner.nextInt(), Calendar.OCTOBER, 1));
+                var cal = Calendar.getInstance();
+                cal.set(Calendar.YEAR, scanner.nextInt());
+                cal.set(Calendar.MONTH, Calendar.OCTOBER);
+                cal.set(Calendar.DAY_OF_MONTH, 1);
+                var dateRepresentation = cal.getTime();
+                citizen.setDate(dateRepresentation);
                 scanner.nextLine();
                 logger.info(() -> "Telefono: ");
                 citizen.setPhoneNum(scanner.nextLine());

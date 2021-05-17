@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>lab06_grupo_kito</groupId>
-    <artifactId>lab06</artifactId>
+    <artifactId>lab06-kito</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>lab06</name>
+    <name>lab06-kito</name>
     <description>Demo project for Spring Boot</description>
     <properties>
         <java.version>11</java.version>

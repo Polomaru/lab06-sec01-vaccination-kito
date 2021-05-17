@@ -40,8 +40,9 @@ public class CitizenController {
 
     @GetMapping("/{id}")
     public Citizen getUserById(@PathVariable Long id) throws IOException, JSONException {
+        if ((int)(Math.log10(id)+1) != 8 ) throw new IllegalArgumentException();
         logger.info(() -> "-------------------[getUserById()]------------------");
-        var request = APIHandling.readJsonFromUrl(url + id);
+        var request = APIHandling.readJsonFromUrl(url + id.toString());
         if(request.isNull("dni")) {
             var citizen = userService.findOneById(id);
             if (citizen.getDni() == null) {

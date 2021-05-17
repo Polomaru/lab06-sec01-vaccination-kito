@@ -7,6 +7,7 @@ import data.dtos.CitizenDTO;
 import data.entities.Citizen;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,9 +37,14 @@ public class CitizenController {
         return userService.save(userDTO);
     }
 
+    @ResponseStatus(code = HttpStatus.NOT_FOUND, reason = "Lenght is not equal to 8")
+    public static class NotFoundException extends RuntimeException {
+    }
+
     @GetMapping("/{id}")
     public Citizen getUserById(@PathVariable Long id) throws IOException, JSONException {
-        if ((int)(Math.log10(id)+1) != 8 ) throw new IllegalArgumentException();
+        if ((int)(Math.log10(id)+1) != 8 )  { return new Citizen();}
+        else{
         logger.info(() -> "-------------------[getUserById()]------------------");
         var request = APIHandling.readJsonFromUrl(URL + id.toString());
         if(request.isNull("dni")) {
@@ -71,7 +77,7 @@ public class CitizenController {
             } else logger.log(Level.SEVERE,"Se encontro al usuario con el DNI: {0} ", id);
             return citizen;
         }
-        return new Citizen();
+        return new Citizen();}
     }
 
     @GetMapping("/all")

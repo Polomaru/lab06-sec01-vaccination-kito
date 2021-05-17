@@ -7,6 +7,7 @@ import cs.software.demo.DemoApplication;
 import data.entities.Citizen;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.BufferedReader;
@@ -21,6 +22,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Logger;
 
+@Controller
 @RestController
 @RequestMapping("/citizen")
 public class CitizenController {

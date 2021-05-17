@@ -1,10 +1,9 @@
 package lab06_grupo_kito.lab06;
 import cs.software.demo.DemoApplication;
 import static org.assertj.core.api.Assertions.assertThat;
-import java.lang.String;
-import java.util.logging.Logger;
 
 import controller.CitizenController;
+import cs.software.demo.DemoApplication;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,7 +23,5 @@ class Lab06ApplicationTests {
     public void contextLoads() throws Exception {
         assertThat(controller).isNotNull();
     }
-//    @Test(threadPoolSize = 80)
-//    public void testCase3()
-//    { }
+
 }

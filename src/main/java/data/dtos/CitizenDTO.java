@@ -4,8 +4,8 @@ import java.util.Date;
 
 public class CitizenDTO {
     Long dni;
-    String name;
-    String surname;
+    String names;
+    String surnames;
     Date date;
     String phoneNum;
     String email;
@@ -23,20 +23,32 @@ public class CitizenDTO {
         this.dni = dni;
     }
 
-    public String getName() {
-        return name;
+    public String getNames() {
+        return names;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNames(String names) {
+        this.names = names;
     }
 
-    public String getSurname() {
-        return surname;
+    public String getSurnames() {
+        return surnames;
     }
 
-    public void setSurname(String surname) {
-        this.surname = surname;
+    public void setSurnames(String surnames) {
+        this.surnames = surnames;
+    }
+
+    @Override
+    public String toString() {
+        return "CitizenDTO{" +
+                "dni=" + dni +
+                ", names='" + names + '\'' +
+                ", surnames='" + surnames + '\'' +
+                ", date=" + date +
+                ", phoneNum='" + phoneNum + '\'' +
+                ", email='" + email + '\'' +
+                '}';
     }
 
     public Date getDate() {
@@ -62,5 +74,4 @@ public class CitizenDTO {
     public void setEmail(String email) {
         this.email = email;
     }
-
 }

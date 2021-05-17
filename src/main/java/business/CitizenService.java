@@ -1,5 +1,6 @@
 package business;
 
+import data.dtos.CitizenDTO;
 import data.entities.Citizen;
 import data.repositories.CitizenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +18,17 @@ public class CitizenService {
     @Autowired
     private CitizenRepository citizenRepository;
     static final Logger logger = Logger.getLogger(CitizenService.class.getName());
-    public Citizen save(Citizen citizenDTO){
-        var temp = citizenDTO.toString();
-        temp = temp.replaceAll("[\n\r\t]", "_");
-        logger.info(temp);
-        citizenRepository.save(citizenDTO);
-        return citizenDTO;
+    public Citizen save(CitizenDTO citizenDTO){
+        var citizen = new Citizen();
+        citizen.setDni(citizenDTO.getDni());
+        citizen.setNames(citizenDTO.getNames());
+        citizen.setSurnames(citizenDTO.getSurnames());
+        citizen.setDate(citizenDTO.getDate());
+        citizen.setEmail(citizenDTO.getEmail());
+        citizen.setPhoneNum(citizenDTO.getPhoneNum());
+        System.out.println(citizen);
+        System.out.println(citizenDTO);
+        return citizenRepository.save(citizen);
     }
 
     public Citizen findOneById(Long id){

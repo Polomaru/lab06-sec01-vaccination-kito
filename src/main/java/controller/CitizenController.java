@@ -3,7 +3,7 @@ package controller;
 
 import business.CitizenService;
 import cs.software.demo.APIHandling;
-import cs.software.demo.DemoApplication;
+import data.dtos.CitizenDTO;
 import data.entities.Citizen;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +15,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @Controller
@@ -30,7 +31,7 @@ public class CitizenController {
     private CitizenService userService;
 
     @PostMapping
-    public Citizen postUser(@RequestBody Citizen userDTO){
+    public Citizen postUser(@RequestBody CitizenDTO userDTO){
         logger.info(() -> "-------------------[postUser()]------------------");
         return userService.save(userDTO);
     }
@@ -43,27 +44,28 @@ public class CitizenController {
         if(request.isNull("dni")) {
             var citizen = userService.findOneById(id);
             if (citizen.getDni() == null) {
+                var citizenDTO = new CitizenDTO();
                 logger.info(() -> "No se encontro usuarios con el id solicitado. Registrese a continuación:");
-                citizen.setDni(id);
+                citizenDTO.setDni(id);
                 logger.info(() -> "Nombre: ");
-                citizen.setNames(scanner.nextLine());
+                citizenDTO.setNames(scanner.nextLine());
                 logger.info(() -> "Apellido(s): ");
-                citizen.setSurnames(scanner.nextLine());
+                citizenDTO.setSurnames(scanner.nextLine());
                 logger.info(() -> "Año de nacimiento: ");
                 var cal = Calendar.getInstance();
                 cal.set(Calendar.YEAR, scanner.nextInt());
                 cal.set(Calendar.MONTH, Calendar.OCTOBER);
                 cal.set(Calendar.DAY_OF_MONTH, 1);
                 var dateRepresentation = cal.getTime();
-                citizen.setDate(dateRepresentation);
+                citizenDTO.setDate(dateRepresentation);
                 scanner.nextLine();
                 logger.info(() -> "Telefono: ");
-                citizen.setPhoneNum(scanner.nextLine());
+                citizenDTO.setPhoneNum(scanner.nextLine());
                 logger.info(() -> "Email");
-                citizen.setEmail(scanner.nextLine());
-                logger.info("Se almacenara el usuario: " + citizen.toString());
-                userService.save(citizen);
-            } else logger.info("Se encontro al usuario con el DNI " + id);
+                citizenDTO.setEmail(scanner.nextLine());
+                logger.log(Level.SEVERE,"Se almacenara el usuario: " + citizenDTO.toString());
+                userService.save(citizenDTO);
+            } else logger.log(Level.SEVERE,"Se encontro al usuario con el DNI: {0} " + id);
             return citizen;
         }
         return new Citizen();

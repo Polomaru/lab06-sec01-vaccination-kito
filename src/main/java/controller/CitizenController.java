@@ -63,9 +63,12 @@ public class CitizenController {
                 citizenDTO.setPhoneNum(scanner.nextLine());
                 logger.info(() -> "Email");
                 citizenDTO.setEmail(scanner.nextLine());
-                logger.log(Level.SEVERE,"Se almacenara el usuario: " + citizenDTO.toString());
+                var temp = citizenDTO.toString();
+                temp = temp.replaceAll("[\n\r\t]", "_");
+                logger.info("Se almacenara el usuario: ");
+                logger.info(temp);
                 userService.save(citizenDTO);
-            } else logger.log(Level.SEVERE,"Se encontro al usuario con el DNI: {0} " + id);
+            } else logger.log(Level.SEVERE,"Se encontro al usuario con el DNI: {0} ", id);
             return citizen;
         }
         return new Citizen();

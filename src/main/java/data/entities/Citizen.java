@@ -6,7 +6,6 @@ import javax.persistence.*;
 import java.util.Date;
 
 import static config.AppConfig.DB_CHAR_LENGTH;
-import static config.AppConfig.DB_DNI_LENGTH;
 import static config.AppConfig.DB_PHONE_LENGTH;
 
 
@@ -45,59 +44,30 @@ public class Citizen {
         this.phoneNum = phoneNum;
         this.email = email;
     }
-    public void replace(Long dni, String names, String surnames, Date date, String phoneNum, String email) {
-        this.dni = dni;
-        this.names = names;
-        this.surnames = surnames;
-        this.date = date;
-        this.phoneNum = phoneNum;
-        this.email = email;
-    }
-    public Long getDni() {
-        return dni;
-    }
 
-    public void setDni(Long dni) {
-        this.dni = dni;
-    }
+    public Long getDni() {return dni;}
 
-    public String getNames() {
-        return names;
-    }
+    public void setDni(Long dni) {this.dni = dni;}
 
-    public void setNames(String names) {
-        this.names = names;
-    }
+    public String getNames() {return names;}
 
-    public String getSurnames() {
-        return surnames;
-    }
+    public void setNames(String names) {this.names = names;}
 
-    public void setSurnames(String surnames) {
-        this.surnames = surnames;
-    }
+    public String getSurnames() {return surnames;}
+
+    public void setSurnames(String surnames) {this.surnames = surnames;}
 
     public Date getDate() { return date; }
 
-    public void setDate(Date date) {
-        this.date = date;
-    }
+    public void setDate(Date date) {this.date = date;}
 
-    public String getPhoneNum() {
-        return phoneNum;
-    }
+    public String getPhoneNum() {return phoneNum;}
 
-    public void setPhoneNum(String phoneNum) {
-        this.phoneNum = phoneNum;
-    }
+    public void setPhoneNum(String phoneNum) {this.phoneNum = phoneNum;}
 
-    public String getEmail() {
-        return email;
-    }
+    public String getEmail() {return email;}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+    public void setEmail(String email) {this.email = email;}
 
     @Override
     public String toString() {

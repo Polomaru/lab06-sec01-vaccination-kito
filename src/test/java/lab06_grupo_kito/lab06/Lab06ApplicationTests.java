@@ -19,7 +19,7 @@ class Lab06ApplicationTests {
 
 
     @Test
-    public void contextLoads() throws Exception {
+     void contextLoads() throws Exception {
         assertThat(controller).isNotNull();
     }
 

@@ -15,29 +15,19 @@ public class CitizenDTO {
         //DEFAULT CONSTRUCTOR
     }
 
-    public Long getDni() {
-        return dni;
-    }
+    public Long getDni() {return dni;}
+    public String getNames() {return names;}
+    public String getSurnames() {return surnames;}
+    public Date getDate() { return date; }
+    public String getPhoneNum() {return phoneNum;}
+    public String getEmail() {return email;}
 
-    public void setDni(Long dni) {
-        this.dni = dni;
-    }
-
-    public String getNames() {
-        return names;
-    }
-
-    public void setNames(String names) {
-        this.names = names;
-    }
-
-    public String getSurnames() {
-        return surnames;
-    }
-
-    public void setSurnames(String surnames) {
-        this.surnames = surnames;
-    }
+    public void setDni(Long dni) {this.dni = dni;}
+    public void setNames(String names) {this.names = names;}
+    public void setSurnames(String surnames) {this.surnames = surnames;}  
+    public void setDate(Date date) {this.date = date;}
+    public void setPhoneNum(String phoneNum) {this.phoneNum = phoneNum;}
+    public void setEmail(String email) {this.email = email;}
 
     @Override
     public String toString() {
@@ -49,29 +39,5 @@ public class CitizenDTO {
                 ", phoneNum='" + phoneNum + '\'' +
                 ", email='" + email + '\'' +
                 '}';
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public String getPhoneNum() {
-        return phoneNum;
-    }
-
-    public void setPhoneNum(String phoneNum) {
-        this.phoneNum = phoneNum;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 }

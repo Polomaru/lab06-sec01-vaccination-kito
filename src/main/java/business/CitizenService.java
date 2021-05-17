@@ -26,8 +26,15 @@ public class CitizenService {
         citizen.setDate(citizenDTO.getDate());
         citizen.setEmail(citizenDTO.getEmail());
         citizen.setPhoneNum(citizenDTO.getPhoneNum());
-        System.out.println(citizen);
-        System.out.println(citizenDTO);
+
+        var temp = citizenDTO.toString();
+        var temp1 = citizen.toString();
+        temp = temp.replaceAll("[\n\r\t]", "_");
+        temp1 = temp1.replaceAll("[\n\r\t]", "_");
+        logger.info(temp);
+        logger.info(temp1);
+
+
         return citizenRepository.save(citizen);
     }
 

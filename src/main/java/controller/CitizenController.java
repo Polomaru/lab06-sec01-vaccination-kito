@@ -10,13 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -51,11 +48,8 @@ public class CitizenController {
             return new Citizen();
         }
         logger.info(() -> "-------------------[getUserById()]------------------");
-        try{
-            APIHandling.readJsonFromUrl(URL + id.toString());
-        }catch (IOException e) {
-            e.printStackTrace();
-        }
+        APIHandling.readJsonFromUrl(URL + id.toString());
+
         logger.log(Level.SEVERE,"Se encontro al usuario con el DNI: {0} ", id);
         return userService.findOneById(id);
     }

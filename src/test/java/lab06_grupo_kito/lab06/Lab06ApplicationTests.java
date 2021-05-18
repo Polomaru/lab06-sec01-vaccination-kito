@@ -60,7 +60,7 @@ class Lab06ApplicationTests {
 
     @Test
     void test12() throws Exception {
-        mvc.perform(get("/citizen")).andDo(print()).andExpect(status().is(405));
+        mvc.perform(get("/citizen")).andDo(print()).andExpect(status().is(404));
     }
 
     @Test
@@ -72,6 +72,7 @@ class Lab06ApplicationTests {
         mvc.perform(get("/citizen/vaccine/44731344")).andDo(print()).andExpect(status().is(200));
     }
 
+
     @Test
     void test15() throws Exception {
         var input = "Juan\nPerez\n2012\n999065932\namail@gmail.com";
@@ -81,10 +82,18 @@ class Lab06ApplicationTests {
         mvc.perform(get("/citizen/44731307")).andDo(print()).andExpect(status().is(200));
 
     }
-
+    @Test
+    void test16() throws Exception {
+        mvc.perform(get("/form")).andDo(print()).andExpect(status().is(200));
+    }
+    @Test
+    void test17() throws Exception {
+        mvc.perform(get("/index/44731307")).andDo(print()).andExpect(status().is(200));
+    }
 //    @Test
-//    void test15() throws Exception {
-//        mvc.perform(get("/citizen/44731333")).andDo(print()).andExpect(status().is(200));
+//    void test18() throws Exception {
+//
+//        mvc.perform(get("/POST")).andDo(print()).andExpect(status().is(200));
 //    }
 
 

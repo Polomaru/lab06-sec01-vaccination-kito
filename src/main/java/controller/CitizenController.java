@@ -38,11 +38,6 @@ public class CitizenController {
 
         return userService.save(userDTO);
     }
-    @RequestMapping(value = "/form", method = RequestMethod.GET)
-    public ModelAndView form(){
-        logger.info(() -> "-------------------[aaaaaaaaaaaaaaaaaaa()]------------------");
-        return new ModelAndView("form");
-    }
 
     @ResponseStatus(code = HttpStatus.NOT_FOUND, reason = "Length is not equal to 8")
     public static class NotFoundException extends RuntimeException {

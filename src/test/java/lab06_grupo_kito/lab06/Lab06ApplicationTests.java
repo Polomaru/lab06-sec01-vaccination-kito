@@ -4,6 +4,8 @@ import controller.CitizenController;
 import cs.software.demo.DemoApplication;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import javassist.NotFoundException;
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import cs.software.demo.ServletInitializer;
@@ -23,8 +25,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.io.ByteArrayInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Scanner;
 import java.util.logging.Logger;
 
 
@@ -64,6 +70,16 @@ class Lab06ApplicationTests {
     @Test
     void test14() throws Exception {
         mvc.perform(get("/citizen/vaccine/44731344")).andDo(print()).andExpect(status().is(200));
+    }
+
+    @Test
+    void test15() throws Exception {
+        var input = "Juan\nPerez\n2012\n999065932\namail@gmail.com";
+        InputStream in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+        mvc.perform(get("/citizen/44731307")).andDo(print()).andExpect(status().is(200));
+        mvc.perform(get("/citizen/44731307")).andDo(print()).andExpect(status().is(200));
+
     }
 
 //    @Test
@@ -132,6 +148,7 @@ class Lab06ApplicationTests {
         citizenDTO.setEmail("a@gmail.com");
         Assertions.assertEquals("a@gmail.com",citizenDTO.getEmail());
         Assertions.assertNotEquals(" ",citizenDTO.toString());
+        Assertions.assertNotNull(controller.postUser(citizenDTO));
 
     }
 

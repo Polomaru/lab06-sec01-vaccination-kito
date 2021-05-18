@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
 import java.util.Calendar;
@@ -30,10 +31,17 @@ public class CitizenController {
     @Autowired
     private CitizenService userService;
 
-    @PostMapping
+
+    @PostMapping("/POST")
     public Citizen postUser(@RequestBody CitizenDTO userDTO){
         logger.info(() -> "-------------------[postUser()]------------------");
+
         return userService.save(userDTO);
+    }
+    @RequestMapping(value = "/form", method = RequestMethod.GET)
+    public ModelAndView form(){
+        logger.info(() -> "-------------------[aaaaaaaaaaaaaaaaaaa()]------------------");
+        return new ModelAndView("form");
     }
 
     @ResponseStatus(code = HttpStatus.NOT_FOUND, reason = "Length is not equal to 8")

@@ -148,7 +148,6 @@ class Lab06ApplicationTests {
         citizenDTO.setEmail("a@gmail.com");
         Assertions.assertEquals("a@gmail.com",citizenDTO.getEmail());
         Assertions.assertNotEquals(" ",citizenDTO.toString());
-        Assertions.assertNotNull(controller.postUser(citizenDTO));
 
     }
 

@@ -53,33 +53,8 @@ public class CitizenController {
         logger.info(() -> "-------------------[getUserById()]------------------");
         try{
             APIHandling.readJsonFromUrl(URL + id.toString());
-        }catch (IOException e){
-            var scanner = new Scanner(System.in);
-            var citizenDTO = new CitizenDTO();
-            logger.info(() -> "No se encontro usuarios con el id solicitado. Registrese a continuación:");
-            citizenDTO.setDni(id);
-            logger.info(() -> "Nombre: ");
-            citizenDTO.setNames(scanner.nextLine());
-            logger.info(() -> "Apellido(s): ");
-            citizenDTO.setSurnames(scanner.nextLine());
-            logger.info(() -> "Año de nacimiento: ");
-            var cal = Calendar.getInstance();
-            cal.set(Calendar.YEAR, scanner.nextInt());
-            cal.set(Calendar.MONTH, Calendar.OCTOBER);
-            cal.set(Calendar.DAY_OF_MONTH, 1);
-            var dateRepresentation = cal.getTime();
-            citizenDTO.setDate(dateRepresentation);
-            scanner.nextLine();
-            logger.info(() -> "Telefono: ");
-            citizenDTO.setPhoneNum(scanner.nextLine());
-            logger.info(() -> "Email");
-            citizenDTO.setEmail(scanner.nextLine());
-            var temp = citizenDTO.toString();
-            temp = temp.replaceAll("[\n\r\t]", "_");
-            logger.info("Se almacenara el usuario: ");
-            logger.info(temp);
-            userService.save(citizenDTO);
-            return userService.findOneById(id);
+        }catch (IOException e) {
+            e.printStackTrace();
         }
         logger.log(Level.SEVERE,"Se encontro al usuario con el DNI: {0} ", id);
         return userService.findOneById(id);

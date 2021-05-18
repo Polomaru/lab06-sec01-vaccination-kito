@@ -31,7 +31,23 @@ public class CitizenController {
 
     @PostMapping("/POST")
     public void  postUser(@RequestBody CitizenDTO userDTO){
-        userService.save(userDTO);
+
+        try{
+            if ((int)(Math.log10(userDTO.getDni())+1) != 8 ){
+                throw new NotFoundException();
+            }
+        }catch (NotFoundException gg){
+            return ;
+        }
+        logger.info(() -> "-------------------[potUser()]------------------");
+        try{
+            APIHandling.readJsonFromUrl(URL + userDTO.getDni().toString());
+        }
+        catch (Exception e) {
+            logger.info(String.valueOf(e));
+            userService.save(userDTO);
+        }
+
     }
 
     @ResponseStatus(code = HttpStatus.NOT_FOUND, reason = "Length is not equal to 8")
@@ -40,17 +56,8 @@ public class CitizenController {
 
     @GetMapping("/{id}")
     public Citizen getUserById(@PathVariable Long id) throws IOException, JSONException {
-        try{
-            if ((int)(Math.log10(id)+1) != 8 ){
-                throw new NotFoundException();
-            }
-        }catch (NotFoundException gg){
-            return new Citizen();
-        }
-        logger.info(() -> "-------------------[getUserById()]------------------");
-        APIHandling.readJsonFromUrl(URL + id.toString());
 
-        logger.log(Level.SEVERE,"Se encontro al usuario con el DNI: {0} ", id);
+
         return userService.findOneById(id);
     }
 

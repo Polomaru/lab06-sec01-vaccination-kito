@@ -23,31 +23,29 @@ import java.util.logging.Logger;
 public class CitizenController {
 
     static final Logger logger = Logger.getLogger(CitizenController.class.getName());
-    static final String URL = "https://api-heroku-kito.herokuapp.com/citizen/";
+    static final String URL = "https://ws-consultas.herokuapp.com/api/dni/";
 
     @Autowired
     private CitizenService userService;
 
 
     @PostMapping("/POST")
-    public void  postUser(@RequestBody CitizenDTO userDTO){
+    public void  postUser(@RequestBody CitizenDTO userDTO) {
 
-        try{
-            if ((int)(Math.log10(userDTO.getDni())+1) != 8 ){
+        try {
+            if ((int) (Math.log10(userDTO.getDni()) + 1) != 8) {
                 throw new NotFoundException();
             }
-        }catch (NotFoundException gg){
-            return ;
+        } catch (NotFoundException gg) {
+            return;
         }
         logger.info(() -> "-------------------[potUser()]------------------");
-        try{
+        try {
             APIHandling.readJsonFromUrl(URL + userDTO.getDni().toString());
-        }
-        catch (Exception e) {
-            logger.info(String.valueOf(e));
             userService.save(userDTO);
+        } catch (Exception e) {
+            logger.info(String.valueOf(e));
         }
-
     }
 
     @ResponseStatus(code = HttpStatus.NOT_FOUND, reason = "Length is not equal to 8")

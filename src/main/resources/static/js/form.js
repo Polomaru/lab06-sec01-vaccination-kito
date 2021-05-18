@@ -10,7 +10,7 @@ function sendForm()
     }
     try{
         $.ajax({
-            url: 'http://localhost:8080/citizen/POST',
+            url: 'citizen/POST',
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(json),

@@ -34,6 +34,8 @@ public class UrLController {
         var citizen = citizenController.getUserById(id);
         if(citizen.getDni() == null) return "redirect:/form";
         model.addAttribute("citizen", citizen);
+        model.addAttribute("date", citizenController.getVaccine(id));
+
         return "hello";
     }
 

@@ -12,10 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -25,59 +23,42 @@ import java.util.logging.Logger;
 public class CitizenController {
 
     static final Logger logger = Logger.getLogger(CitizenController.class.getName());
-    static final Scanner scanner = new Scanner(System.in);
-    static final String URL = "http://ws-consultas.herokuapp.com/api/dni/";
+    static final String URL = "https://api-heroku-kito.herokuapp.com/citizen/";
 
     @Autowired
     private CitizenService userService;
 
-    @PostMapping
-    public Citizen postUser(@RequestBody CitizenDTO userDTO){
-        logger.info(() -> "-------------------[postUser()]------------------");
-        return userService.save(userDTO);
+
+    @PostMapping("/POST")
+    public void  postUser(@RequestBody CitizenDTO userDTO){
+
+        try{
+            if ((int)(Math.log10(userDTO.getDni())+1) != 8 ){
+                throw new NotFoundException();
+            }
+        }catch (NotFoundException gg){
+            return ;
+        }
+        logger.info(() -> "-------------------[potUser()]------------------");
+        try{
+            APIHandling.readJsonFromUrl(URL + userDTO.getDni().toString());
+        }
+        catch (Exception e) {
+            logger.info(String.valueOf(e));
+            userService.save(userDTO);
+        }
+
     }
 
-    @ResponseStatus(code = HttpStatus.NOT_FOUND, reason = "Lenght is not equal to 8")
+    @ResponseStatus(code = HttpStatus.NOT_FOUND, reason = "Length is not equal to 8")
     public static class NotFoundException extends RuntimeException {
     }
 
     @GetMapping("/{id}")
     public Citizen getUserById(@PathVariable Long id) throws IOException, JSONException {
-        if ((int)(Math.log10(id)+1) != 8 )  { return new Citizen();}
-        else{
-        logger.info(() -> "-------------------[getUserById()]------------------");
-        var request = APIHandling.readJsonFromUrl(URL + id.toString());
-        if(request.isNull("dni")) {
-            var citizen = userService.findOneById(id);
-            if (citizen.getDni() == null) {
-                var citizenDTO = new CitizenDTO();
-                logger.info(() -> "No se encontro usuarios con el id solicitado. Registrese a continuación:");
-                citizenDTO.setDni(id);
-                logger.info(() -> "Nombre: ");
-                citizenDTO.setNames(scanner.nextLine());
-                logger.info(() -> "Apellido(s): ");
-                citizenDTO.setSurnames(scanner.nextLine());
-                logger.info(() -> "Año de nacimiento: ");
-                var cal = Calendar.getInstance();
-                cal.set(Calendar.YEAR, scanner.nextInt());
-                cal.set(Calendar.MONTH, Calendar.OCTOBER);
-                cal.set(Calendar.DAY_OF_MONTH, 1);
-                var dateRepresentation = cal.getTime();
-                citizenDTO.setDate(dateRepresentation);
-                scanner.nextLine();
-                logger.info(() -> "Telefono: ");
-                citizenDTO.setPhoneNum(scanner.nextLine());
-                logger.info(() -> "Email");
-                citizenDTO.setEmail(scanner.nextLine());
-                var temp = citizenDTO.toString();
-                temp = temp.replaceAll("[\n\r\t]", "_");
-                logger.info("Se almacenara el usuario: ");
-                logger.info(temp);
-                userService.save(citizenDTO);
-            } else logger.log(Level.SEVERE,"Se encontro al usuario con el DNI: {0} ", id);
-            return citizen;
-        }
-        return new Citizen();}
+
+
+        return userService.findOneById(id);
     }
 
     @GetMapping("/all")

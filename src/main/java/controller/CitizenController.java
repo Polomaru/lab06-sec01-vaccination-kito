@@ -33,10 +33,8 @@ public class CitizenController {
 
 
     @PostMapping("/POST")
-    public Citizen postUser(@RequestBody CitizenDTO userDTO){
-        logger.info(() -> "-------------------[postUser()]------------------");
-
-        return userService.save(userDTO);
+    public void  postUser(@RequestBody CitizenDTO userDTO){
+        userService.save(userDTO);
     }
 
     @ResponseStatus(code = HttpStatus.NOT_FOUND, reason = "Length is not equal to 8")

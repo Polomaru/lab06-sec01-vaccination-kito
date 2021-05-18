@@ -17,6 +17,11 @@ public class UrLController {
     @Autowired
     private CitizenController citizenController ;
 
+    @GetMapping(value = "/")
+    public String index(){
+        logger.info(() -> "-------------------[index ()]------------------");
+        return "index";
+    }
 
     @GetMapping(value = "/form")
     public String form(){

@@ -1,21 +1,13 @@
 package lab06_grupo_kito.lab06;
-import business.CitizenService;
 import controller.CitizenController;
 import cs.software.demo.DemoApplication;
-import static org.assertj.core.api.Assertions.assertThat;
-
-import javassist.NotFoundException;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import cs.software.demo.ServletInitializer;
 import data.dtos.CitizenDTO;
 import data.entities.Citizen;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -26,12 +18,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.io.ByteArrayInputStream;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Scanner;
-import java.util.logging.Logger;
+import java.lang.String;
 
 
 @SpringBootTest(
@@ -46,10 +36,10 @@ class Lab06ApplicationTests {
     @Autowired
     public MockMvc mvc;
 
-    @Test
-    void test1() throws Exception {
-        mvc.perform(get("/citizen/44731344")).andDo(print()).andExpect(status().isOk());
-    }
+//    @Test
+//    void test1() throws Exception {
+//        mvc.perform(get("/citizen/44731344")).andDo(print()).andExpect(status().isOk());
+//    }
 
 
     @Test
@@ -58,20 +48,55 @@ class Lab06ApplicationTests {
     }
 
 
-    @Test
-    void test12() throws Exception {
-        mvc.perform(get("/citizen")).andDo(print()).andExpect(status().is(404));
-    }
+//    @Test
+//    void test12() throws Exception {
+//        mvc.perform(get("/citizen")).andDo(print()).andExpect(status().is(404));
+//    }
 
     @Test
     void test13() throws Exception {
         mvc.perform(get("/citizen/all")).andDo(print()).andExpect(status().is(200));
     }
+//    @Test
+//    void test14() throws Exception {
+//        mvc.perform(get("/citizen/vaccine/44731344")).andDo(print()).andExpect(status().is(200));
+//    }
+@Test
+void test14() throws Exception {
+    long startTime = System.currentTimeMillis();
+
+    mvc.perform(get("/citizen/vaccine/44731344")).andDo(print()).andExpect(status().is(200));
+
+    long endTime = System.currentTimeMillis();
+    long duration = (endTime - startTime) ;
+    assert (duration <= 400 );
+}
+
     @Test
-    void test14() throws Exception {
-        mvc.perform(get("/citizen/vaccine/44731344")).andDo(print()).andExpect(status().is(200));
+    void test12() throws Exception {
+        long startTime = System.currentTimeMillis();
+
+
+        mvc.perform(get("/citizen")).andDo(print()).andExpect(status().is(404));
+
+        long endTime = System.currentTimeMillis();
+        long duration = (endTime - startTime) ;
+        assert (duration <= 400 );
     }
 
+    @Test
+    void test1() throws Exception {
+
+
+        long startTime = System.currentTimeMillis();
+
+        mvc.perform(get("/citizen/44731344")).andDo(print()).andExpect(status().isOk());
+
+        long endTime = System.currentTimeMillis();
+        long duration = (endTime - startTime) ;
+        assert (duration <= 400 );
+
+    }
 
     @Test
     void test15() throws Exception {
@@ -178,7 +203,5 @@ class Lab06ApplicationTests {
         Assertions.assertNotNull(servient);
 
     }
-
-
 
 }
